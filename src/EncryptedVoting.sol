@@ -50,4 +50,8 @@ contract EncryptedVoting {
 
         return finalTally;
     }
+
+    function getEncryptedTally() external view returns (euint8) {
+        return encryptedTally;
+    }
 }
