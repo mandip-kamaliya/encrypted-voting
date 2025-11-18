@@ -10,11 +10,20 @@ contract EncryptedVoting{
 
     address public immutable i_owner;
 
-    bool public decriptrequested;
+    bool public decriptRequested=false;
 
-    euint8 public ENCRYPTED_ZERO;
+    euint8 private ENCRYPTED_ZERO;
 
     event VoteCast(address indexed voter);
+    
+    constructor() {
+        i_owner = msg.sender;
 
+        ENCRYPTED_ZERO = FHE.asEuint8(0);
+        FHE.allowthis(ENCRYPTED_ZERO);
+        encryptedtally=ENCRYPTED_ZERO;
+        FHE.allowthis(encryptedtally);
+
+    }
 
 }
