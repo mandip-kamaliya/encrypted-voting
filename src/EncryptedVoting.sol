@@ -39,4 +39,15 @@ contract EncryptedVoting {
         FHE.decrypt(encryptedTally);
         decryptionRequested = true;
     }
+
+    function getFinalTally() external view returns (uint8 _tally) {
+        require(msg.sender == i_owner, "Only owner can view tally");
+        require(decryptionRequested, "Decryption not requested");
+
+        (uint8 finalTally, bool isReady) = FHE.getDecryptResultSafe(encryptedTally);
+
+        require(isReady, "Decryption not yet complete. Try again shortly.");
+
+        return finalTally;
+    }
 }
