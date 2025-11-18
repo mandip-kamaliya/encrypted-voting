@@ -34,17 +34,17 @@ contract EncryptedVoting {
 
     function decryptRequested() external {
         require(msg.sender == i_owner, "only owner a owner can call this");
-        require(!decryptionRequested, "Decryption already requested");
-        FHE.allowSender(encryptedTally);
-        FHE.decrypt(encryptedTally);
-        decryptionRequested = true;
+        require(!decriptRequested, "Decryption already requested");
+        FHE.allowSender(encryptedtally);
+        FHE.decrypt(encryptedtally);
+        decriptRequested = true;
     }
 
     function getFinalTally() external view returns (uint8 _tally) {
         require(msg.sender == i_owner, "Only owner can view tally");
-        require(decryptionRequested, "Decryption not requested");
+        require(decriptRequested, "Decryption not requested");
 
-        (uint8 finalTally, bool isReady) = FHE.getDecryptResultSafe(encryptedTally);
+        (uint8 finalTally, bool isReady) = FHE.getDecryptResultSafe(encryptedtally);
 
         require(isReady, "Decryption not yet complete. Try again shortly.");
 
@@ -52,6 +52,6 @@ contract EncryptedVoting {
     }
 
     function getEncryptedTally() external view returns (euint8) {
-        return encryptedTally;
+        return encryptedtally;
     }
 }
