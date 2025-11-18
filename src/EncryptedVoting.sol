@@ -31,4 +31,12 @@ contract EncryptedVoting {
         FHE.allowThis(encryptedtally);
         emit VoteCast(msg.sender);
     }
+
+    function decryptRequested() external {
+        require(msg.sender == i_owner, "only owner a owner can call this");
+        require(!decryptionRequested, "Decryption already requested");
+        FHE.allowSender(encryptedTally);
+        FHE.decrypt(encryptedTally);
+        decryptionRequested = true;
+    }
 }
